@@ -14,12 +14,6 @@ minikube start \
   --extra-config=controller-manager.horizontal-pod-autoscaler-sync-period=10s
 ```
 
-> If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
-
-You should install `jq` — a lightweight and flexible command-line JSON processor.
-
-You can find more [info about `jq` on the official website](https://github.com/stedolan/jq).
-
 ## Installing Custom Metrics Api
 
 Deploy the Metrics Server in the `kube-system` namespace:
@@ -27,8 +21,6 @@ Deploy the Metrics Server in the `kube-system` namespace:
 ```bash
 kubectl create -f monitoring/metrics-server
 ```
-
-After one minute the metric-server starts reporting CPU and memory usage for nodes and pods.
 
 View nodes metrics:
 
@@ -124,18 +116,3 @@ You can inspect the event and triggers in the HPA with:
 ```bash
 kubectl get hpa spring-boot-hpa
 ```
-
-## Notes
-
-The configuration for metrics and metrics server is configured to run on minikube only.
-
-**You won't be able to run the same YAML files for metrics and custom metrics server on your cluster or EKS, GKE, AKS, etc.**
-
-Also, there are secrets checked in the repository to deploy the Prometheus adapter.
-
-**In production, you should generate your own secrets and (possibly) not check them into version control.**
-
-If you wish to run metrics and custom metrics server in production, you should check out the following resources:
-
-- [Metrics server](https://github.com/kubernetes-sigs/metrics-server)
-- [How to install Prometheus and the Promtheus Adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter/blob/master/docs/walkthrough.md)
